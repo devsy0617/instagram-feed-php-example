@@ -17,7 +17,7 @@ $tmpData = "https://api.instagram.com/v1/users/self/media/recent/?access_token="
 $result = fetchData($tmpData);
 $result = json_decode($result)->data;
 
-$data = getImages($result,'standard_resolution');
+$data = getImages($result, 'standard_resolution');
 
 // 크기별 이미지 호출 'standard_resolution','low_resolution','thumbnail'
 function getImages($data, $size)
@@ -27,18 +27,26 @@ function getImages($data, $size)
     foreach ($data as $data_key => $data_value) {
         $tmpImageObj = $data_value->images;
 
-        if($size == 'standard_resolution') {
+        if ($size == 'standard_resolution') {
             $imageData[$data_key] = $tmpImageObj->standard_resolution->url;
-        }
-        else if($size == 'low_resolution') {
+        } else if ($size == 'low_resolution') {
             $imageData[$data_key] = $tmpImageObj->low_resolution->url;
-        }
-        else {
+        } else {
             $imageData[$data_key] = $tmpImageObj->thumbnail->url;
         }
     }
 
     return $imageData;
 }
-?>
+
+// 인스타그램 각 콘텐츠 내용 가져오기
+function getCaption($data)
+{
+    foreach ($data as $data_key => $data_value) {
+        $captionData = array();
+        $captionData[$data_key] = $data_value->caption;
+    }
+    return $captionData;
+}
+
 
