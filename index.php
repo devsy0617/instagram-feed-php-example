@@ -1,57 +1,28 @@
 <?php
-include("config/config.php");
+session_start();
 
-function fetchData($url)
-{
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 20);
-    $result = curl_exec($ch);
-    curl_close($ch);
-    return $result;
+if(isset($_GET['code']) && !isset($_SESSION['ACCESS_TOKEN'])){
+    $_SESSION['CODE'] = $_GET['code'];
+    $_SESSION['CLIENT_SECRET'] = ''; //user instagram app client_secret
+
+    $curl = curl_init("https://api.instagram.com/oauth/access_token");
+    curl_setopt($curl,CURLOPT_POST,true);
+    curl_setopt($curl,CURLOPT_POSTFIELDS,array(
+        'client_id'                =>     $_SESSION['CLIENT_ID'],
+        'client_secret'            =>     $_SESSION['CLIENT_SECRET'],
+        'grant_type'               =>     'authorization_code',
+        'redirect_uri'             =>     $_SESSION['REDIRECT_URI'],
+        'code'                     =>     $_GET['code']
+    ));
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+    $result = curl_exec($curl);
+    curl_close($curl);
+
+    $result = json_decode($result,true);
+
+    $_SESSION['ACCESS_TOKEN'] = $result['access_token'];
 }
+else {
 
-$tmpData = "https://api.instagram.com/v1/users/self/media/recent/?access_token=" . $CONFIG['ACCESS_TOKEN'];
-
-$result = fetchData($tmpData);
-$result = json_decode($result)->data;
-
-//$data = getImages($result, 'standard_resolution');
-
-// 크기별 이미지 리스트 호출 'standard_resolution','low_resolution','thumbnail'
-function getImages($data, $size)
-{
-    $imageData = array();
-
-    foreach ($data as $data_key => $data_value) {
-        $tmpImageObj = $data_value->images;
-
-        if ($size == 'standard_resolution') {
-            $imageData[$data_key] = $tmpImageObj->standard_resolution->url;
-        } else if ($size == 'low_resolution') {
-            $imageData[$data_key] = $tmpImageObj->low_resolution->url;
-        } else {
-            $imageData[$data_key] = $tmpImageObj->thumbnail->url;
-        }
-    }
-
-    return $imageData;
 }
-
-// 인스타그램 콘텐츠 내용 리스트 가져오기
-function getCaption($data)
-{
-    $captionData = array();
-
-    foreach ($data as $data_key => $data_value) {
-        $captionData[$data_key] = $data_value->caption;
-    }
-
-    return $captionData;
-}
-
-$result_list = getCaption($result);
-
-
-?>
