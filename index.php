@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if(isset($_GET['code']) && !isset($_SESSION['ACCESS_TOKEN'])){
+if(isset($_GET['code']) && !isset($_SESSION['ACCESS_TOKEN'])) {
     $_SESSION['CODE'] = $_GET['code'];
     $_SESSION['CLIENT_SECRET'] = ''; //user instagram app client_secret
 
@@ -22,7 +22,6 @@ if(isset($_GET['code']) && !isset($_SESSION['ACCESS_TOKEN'])){
     $result = json_decode($result,true);
 
     $_SESSION['ACCESS_TOKEN'] = $result['access_token'];
-}
-else {
 
+    header("Location: ".'instaList.php' , true, 301);
 }
