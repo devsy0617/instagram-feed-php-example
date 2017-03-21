@@ -5,6 +5,7 @@ if (isset($_GET['code']) && !isset($_SESSION['ACCESS_TOKEN'])) {
     $_SESSION['CODE'] = $_GET['code'];
     $_SESSION['CLIENT_SECRET'] = $_GET['client_secret'];
 
+
     $curl = curl_init("https://api.instagram.com/oauth/access_token");
     curl_setopt($curl, CURLOPT_POST, true);
     curl_setopt($curl, CURLOPT_POSTFIELDS, array(
@@ -29,18 +30,51 @@ if (isset($_GET['code']) && !isset($_SESSION['ACCESS_TOKEN'])) {
 ?>
 
 <link rel="stylesheet" type="text/css" href="css/style.css">
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
 <div class="content">
-    <div id="not-access-token" class="access-btn">
-        <p>엑세스 토큰 얻기</p>
+    <div class="input-area-wrap">
+        <div id="not-access-token" class="access-btn">
+            <p>엑세스 토큰 얻기</p>
+        </div>
+
+        <div id="access-token" class="access-btn">
+            <p>인스타 리스트 보러가기</p>
+        </div>
+
+        <div class="clear"></div>
+
+        <div id="not-access-token-input" class="token-input">
+            <p>ASSESS_TOKEN을 얻기 위해 정보를 입력해주세요.</p>
+            <p>꼭 READ ME를 읽어주세요.</p>
+
+            <form method="post" action="getAccessToken.php">
+                <table>
+                    <tr>
+                        <th>CLIENT ID</th>
+                        <td><input type="text" name="client_id"></td>
+                    </tr>
+
+                    <tr>
+                        <th>CLIENT SECRET</th>
+                        <td><input type="text" name="client_secret"></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2"><input type="submit" value="확인"></td>
+                    </tr>
+                </table>
+
+            </form>
+        </div>
+
+        <div id="access-token-input" class="token-input">
+            <p>ASSESS_TOKEN을 입력해주세요.</p>
+
+            <form method="post" action="instaList.php">
+                <p>ACCESS TOKEN : <input type="text" name="client_id"></p>
+                <p><input type="submit" value="확인"></p>
+            </form>
+        </div>
     </div>
-
-    <div id="access-token" class="access-btn">
-        <p>인스타 리스트 보러가기</p>
-    </div>
-
-    <div class="clear"></div>
-
-    <div id="input-area"></div>
 </div>
-
