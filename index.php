@@ -24,4 +24,9 @@ if(isset($_GET['code']) && !isset($_SESSION['ACCESS_TOKEN'])) {
     $_SESSION['ACCESS_TOKEN'] = $result['access_token'];
 
     header("Location: ".'instaList.php' , true, 301);
+} else if(isset($_SESSION['ACCESS_TOKEN'])) {
+    header("Location: ".'instaList.php' , true, 301);
 }
+
+?>
+
