@@ -45,36 +45,47 @@ if (isset($_GET['code']) && !isset($_SESSION['ACCESS_TOKEN'])) {
         <div class="clear"></div>
 
         <div id="not-access-token-input" class="token-input">
-            <p>ASSESS_TOKEN을 얻기 위해 정보를 입력해주세요.</p>
-            <p>꼭 READ ME를 읽어주세요.</p>
-
             <form method="post" action="getAccessToken.php">
-                <table>
+                <table border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td colspan="2" class="td-center">ASSESS_TOKEN을 얻기 위해 정보를 입력해주세요. (사용법 read me 필독)</td>
+                    </tr>
                     <tr>
                         <th>CLIENT ID</th>
-                        <td><input type="text" name="client_id"></td>
+                        <td class="token-input-td"><input type="text" name="client_id"></td>
                     </tr>
 
                     <tr>
                         <th>CLIENT SECRET</th>
-                        <td><input type="text" name="client_secret"></td>
+                        <td class="token-input-td"><input type="text" name="client_secret"></td>
                     </tr>
 
                     <tr>
-                        <td colspan="2"><input type="submit" value="확인"></td>
+                        <td colspan="2" class="token-input-td"><input type="submit" value="확인" class="btn-submit"></td>
                     </tr>
                 </table>
 
             </form>
         </div>
 
-        <div id="access-token-input" class="token-input">
-            <p>ASSESS_TOKEN을 입력해주세요.</p>
 
+        <div id="access-token-input" class="token-input">
             <form method="post" action="instaList.php">
-                <p>ACCESS TOKEN : <input type="text" name="client_id"></p>
-                <p><input type="submit" value="확인"></p>
+                <table border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td colspan="2" class="td-center">ASSESS_TOKEN을 입력해주세요.</td>
+                    </tr>
+                    <tr>
+                        <th>ACCESS TOKEN</th>
+                        <td class="token-input-td"><input type="text" name="client_id"></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2" class="token-input-td"><input type="submit" value="확인" class="btn-submit"></td>
+                    </tr>
+                </table>
             </form>
         </div>
+
     </div>
 </div>
