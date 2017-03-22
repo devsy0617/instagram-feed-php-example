@@ -34,6 +34,8 @@ if (isset($_GET['code']) && !isset($_SESSION['ACCESS_TOKEN'])) {
 <script src="js/access-token-process.js"></script>
 
 <div class="content">
+    <p class="title">원하는 제스쳐를 선택하세요</p>
+
     <div class="input-area-wrap">
         <div id="not-access-token" class="access-btn">
             <p>엑세스 토큰 얻기</p>
