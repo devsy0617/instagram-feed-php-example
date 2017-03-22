@@ -4,6 +4,7 @@ session_start();
 if (isset($_GET['code']) && !isset($_SESSION['ACCESS_TOKEN'])) {
     $_SESSION['CODE'] = $_GET['code'];
     $_SESSION['CLIENT_SECRET'] = $_GET['client_secret'];
+    $_SESSION['REDIRECT_URI'] = $_GET['redirect_uri'];
 
 
     $curl = curl_init("https://api.instagram.com/oauth/access_token");
@@ -61,6 +62,11 @@ if (isset($_GET['code']) && !isset($_SESSION['ACCESS_TOKEN'])) {
                     <tr>
                         <th>CLIENT SECRET</th>
                         <td class="token-input-td"><input type="text" name="client_secret"></td>
+                    </tr>
+
+                    <tr>
+                        <th>REDIRECT URI</th>
+                        <td class="token-input-td"><input type="text" name="redirect_uri"></td>
                     </tr>
 
                     <tr>
