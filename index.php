@@ -31,6 +31,7 @@ if (isset($_GET['code']) && !isset($_SESSION['ACCESS_TOKEN'])) {
 
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="js/access-token-process.js"></script>
 
 <div class="content">
     <div class="input-area-wrap">
@@ -67,7 +68,6 @@ if (isset($_GET['code']) && !isset($_SESSION['ACCESS_TOKEN'])) {
 
             </form>
         </div>
-
 
         <div id="access-token-input" class="token-input">
             <form method="post" action="instaList.php">
