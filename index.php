@@ -3,9 +3,6 @@ session_start();
 
 if (isset($_GET['code']) && !isset($_SESSION['ACCESS_TOKEN'])) {
     $_SESSION['CODE'] = $_GET['code'];
-    $_SESSION['CLIENT_SECRET'] = $_GET['client_secret'];
-    $_SESSION['REDIRECT_URI'] = $_GET['redirect_uri'];
-
 
     $curl = curl_init("https://api.instagram.com/oauth/access_token");
     curl_setopt($curl, CURLOPT_POST, true);
@@ -22,7 +19,9 @@ if (isset($_GET['code']) && !isset($_SESSION['ACCESS_TOKEN'])) {
     curl_close($curl);
 
     $result = json_decode($result, true);
+
     $_SESSION['ACCESS_TOKEN'] = $result['access_token'];
+    header("Location: " . 'instaList.php', true, 301);
 
 } else if (isset($_SESSION['ACCESS_TOKEN'])) {
     header("Location: " . 'instaList.php', true, 301);
