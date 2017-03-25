@@ -11,32 +11,40 @@ class CustomInstagram {
 
     // 내 전체 정보 가져오기
     // image 불러올 때는 type, size 파라미터 필요
-    function getMyFeedTotalInfo($type,$size){
+    // 나머지는 READ ME에서 사용법 참조
+    function getMyFeedTotalInfo($type,$size=null){
         $url = 'https://api.instagram.com/v1/users/self/media/recent/?access_token='.$_SESSION['ACCESS_TOKEN'];
         $result = json_decode($this->fetchData($url));
 
-        if ($type == 'image') {
-            switch ($size) {
+        if ($type == 'image')
+        {
+            switch ($size)
+            {
                 case 'standard_resolution' :
-                    return $this->getImageList($result, 'getImageList');
+                    return $this->getImageList($result->data, 'getImageList');
                 case 'low_resolution' :
-                    return $this->getImageList($result, 'low_resolution');
+                    return $this->getImageList($result->data, 'low_resolution');
                 case 'thumbnail' :
-                    return $this->getImageList($result, 'thumbnail');
+                    return $this->getImageList($result->data, 'thumbnail');
             }
-        } else {
+        }
+        elseif ($type == 'content')
+        {
+            return $this->getCaption($result->data);
+        }
+        else
+        {
             return $result;
         }
     }
 
 
     // 내 피드 이미지 리스트 가져오기
-    // 옵션 (큰거->작은거순) : 'standard_resolution','low_resolution','thumbnail'
+    // size 옵션 (큰거->작은거순) : 'standard_resolution','low_resolution','thumbnail'
     function getImageList($data,$size) {
         $list = array();
 
-
-        foreach ($data->data as $data_key => $data_value) {
+        foreach ($data as $data_key => $data_value) {
             $tmpImageObj = $data_value->images;
 
             if ($size == 'standard_resolution') {
@@ -51,6 +59,19 @@ class CustomInstagram {
         return $list;
     }
 
+    // 내 피드 내용 리스트 가져오기
+    function getCaption($data)
+    {
+        $captionData = array();
+
+        foreach ($data as $data_key => $data_value) {
+            $captionData[$data_key] = $data_value->caption;
+        }
+
+        return $captionData;
+    }
+
+
     // 호출시 curl을 사용한 결과 return
     function fetchData($url)
     {
@@ -62,6 +83,5 @@ class CustomInstagram {
         curl_close($ch);
         return $result;
     }
-
 
 }
