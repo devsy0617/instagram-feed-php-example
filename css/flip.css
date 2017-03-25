@@ -1,0 +1,51 @@
+body {
+    background: #fff;
+}
+
+.flip-container {
+    perspective: 1000px;
+    border:2px solid rgba(0,0,0,0) !important;
+}
+
+/* front pane, placed above back */
+.front{
+    z-index:2;
+    transform: rotateY(0deg);
+}
+/* back, initially hidden pane */
+.back {
+    transform: rotateY(180deg);
+    background:url('http://opengameart.org/sites/default/files/styles/medium/public/card%20back%20purple.png') no-repeat;
+    background-size:100% 100%;
+}
+
+/* flip the pane when hovered */
+.flip-container:hover .flipper, .flip-container.hover .flipper {
+    transform: rotateY(180deg);
+}
+
+.flip-container, .front, .back {
+    width: 150px;
+    height: 150px;
+    display: inline-block;
+    background-color: white;
+    border: 1px solid #B5B5B5;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+/* flip speed goes here */
+.flipper {
+    transition: 0.6s;
+    /* 하위요소에 3D 좌표값 지정 */
+    transform-style: preserve-3d;
+    position: relative;
+}
+/* hide back of pane during swap */
+.front, .back{
+    position: absolute;
+    backface-visibility:hidden;
+}
