@@ -37,11 +37,11 @@ if (isset($_GET['code']) && !isset($_SESSION['ACCESS_TOKEN'])) {
     <p class="title">원하는 제스쳐를 선택하세요</p>
 
     <div class="input-area-wrap">
-        <div id="not-access-token" class="access-btn">
+        <div id="not-access-token" class="access-btn" data-target="#not-access-token-input">
             <p>엑세스 토큰 얻기</p>
         </div>
 
-        <div id="access-token" class="access-btn">
+        <div id="access-token" class="access-btn" data-target="#access-token-input">
             <p>인스타 리스트 보러가기</p>
         </div>
 
