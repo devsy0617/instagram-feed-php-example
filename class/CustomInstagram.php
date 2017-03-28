@@ -21,7 +21,7 @@ class CustomInstagram {
             switch ($size)
             {
                 case 'standard_resolution' :
-                    return $this->getImageList($result->data, 'getImageList');
+                    return $this->getImageList($result->data, 'standard_resolution');
                 case 'low_resolution' :
                     return $this->getImageList($result->data, 'low_resolution');
                 case 'thumbnail' :
@@ -31,6 +31,28 @@ class CustomInstagram {
         elseif ($type == 'content')
         {
             return $this->getCaption($result->data);
+        }
+        elseif ($type == 'image_content')
+        {
+            $content = $this->getCaption($result->data);
+            switch ($size)
+            {
+                case 'standard_resolution' :
+                    $list = $this->getImageList($result->data, 'standard_resolution');
+                case 'low_resolution' :
+                    $list = $this->getImageList($result->data, 'low_resolution');
+                case 'thumbnail' :
+                    $list = $this->getImageList($result->data, 'thumbnail');
+            }
+
+            $image_content = array();
+
+            foreach ($list as $list_key => $list_val) {
+                $image_content[$list_key]['image'] = $list_val;
+                $image_content[$list_key]['text'] = $content[$list_key]->text;
+            }
+
+            return $image_content;
         }
         else
         {
